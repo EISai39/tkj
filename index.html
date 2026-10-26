@@ -43,7 +43,7 @@
                 <i class="fa-solid fa-house w-5 text-center"></i><span>Beranda & Matriks</span>
             </button>
             <button @click="changeTab('materi')" :class="activeTab === 'materi' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'" class="w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl font-medium text-sm transition-all text-left">
-                <i class="fa-solid fa-book-open-reader w-5 text-center"></i><span>Materi & Audio (TTS)</span>
+                <i class="fa-solid fa-book-open-reader w-5 text-center"></i><span>Materi & Audio Narasi</span>
             </button>
             <button @click="changeTab('simulator')" :class="activeTab === 'simulator' ? 'bg-indigo-600 text-white shadow-md' : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'" class="w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl font-medium text-sm transition-all text-left">
                 <i class="fa-solid fa-screwdriver-wrench w-5 text-center"></i><span>Simulator Rakit PC</span>
@@ -69,12 +69,12 @@
         <!-- Header -->
         <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm z-10 sticky top-0">
             <div class="flex items-center space-x-3">
-                <span class="text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 bg-indigo-100 text-indigo-700 rounded-md">Asesmen Pusmendik</span>
+                <span class="text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 bg-indigo-100 text-indigo-700 rounded-md">Asesmen Mandiri</span>
                 <h2 class="text-lg font-bold text-slate-800" x-text="getTabTitle()"></h2>
             </div>
             <div class="hidden sm:flex items-center space-x-2 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
                 <i class="fa-solid fa-graduation-cap text-indigo-600"></i>
-                <span class="text-xs font-semibold text-slate-700">Teknik Komputer dan Jaringan (TKJ) / TJKT</span>
+                <span class="text-xs font-semibold text-slate-700">Teknik Komputer dan Jaringan (TKJ)</span>
             </div>
         </header>
 
@@ -91,7 +91,7 @@
                     <div class="relative z-10 max-w-2xl">
                         <span class="bg-indigo-500/30 text-indigo-200 text-xs font-bold px-3 py-1 rounded-full border border-indigo-400/30 uppercase tracking-wider">Capaian Pembelajaran Fase E</span>
                         <h2 class="text-3xl md:text-4xl font-extrabold mt-4 tracking-tight leading-tight">Mastering Perangkat Keras Komputer</h2>
-                        <p class="mt-4 text-indigo-100 text-sm md:text-base leading-relaxed">Platform pembelajaran interaktif berbasis kisi-kisi standar industri dan Pusmendik. Pelajari 5 elemen utama perangkat keras (Motherboard, CPU/RAM, Storage, PSU & Periferal), rakit PC di simulator interaktif, dan uji kompetensi Anda dengan paket soal TKA.</p>
+                        <p class="mt-4 text-indigo-100 text-sm md:text-base leading-relaxed">Platform pembelajaran interaktif berbasis standar industri dan asesmen nasional. Pelajari 5 elemen utama perangkat keras (Motherboard, CPU/RAM, Storage, PSU & Periferal), rakit PC di simulator interaktif, dan uji kompetensi Anda dengan paket soal asesmen.</p>
                         <div class="mt-8 flex flex-wrap gap-3">
                             <button @click="changeTab('materi')" class="bg-white text-indigo-950 hover:bg-indigo-50 font-bold px-6 py-3 rounded-xl shadow-lg transition-all text-sm flex items-center space-x-2">
                                 <i class="fa-solid fa-book-open"></i><span>Mulai Belajar</span>
@@ -161,21 +161,61 @@
                             <div class="flex items-center space-x-2">
                                 <button @click="toggleAudio(topicsData[selectedTopic].fullText)" class="px-4 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold rounded-xl text-xs flex items-center space-x-2 transition-all shadow-sm border border-indigo-200">
                                     <i :class="isSpeaking ? 'fa-solid fa-stop text-red-500' : 'fa-solid fa-volume-high'"></i>
-                                    <span x-text="isSpeaking ? 'Hentikan Audio' : 'Putar Audio TTS'"></span>
+                                    <span x-text="isSpeaking ? 'Hentikan Audio' : 'Putar Audio Narasi'"></span>
                                 </button>
                                 <button @click="downloadMateri(selectedTopic)" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs flex items-center space-x-2 transition-all shadow-sm">
                                     <i class="fa-solid fa-download"></i>
-                                    <span class="hidden sm:inline">Unduh PDF/TXT</span>
+                                    <span class="hidden sm:inline">Unduh TXT</span>
                                 </button>
                             </div>
                         </div>
 
                         <!-- Content Render -->
                         <div class="mt-6 space-y-6">
-                            <!-- Image Placeholder based on Topic -->
-                            <div class="w-full h-48 md:h-64 bg-slate-100 rounded-2xl border border-slate-200 flex items-center justify-center overflow-hidden relative group">
-                                <img :src="`https://placehold.co/800x400/1e293b/ffffff?text=Ilustrasi+${encodeURIComponent(topicsData[selectedTopic].title)}`" alt="Ilustrasi Topik" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500">
-                                <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur text-white text-[10px] px-2 py-1 rounded">Visualisasi Perangkat Keras</div>
+                            <!-- VISUALISASI HARDWARE KELAS INTERAKTIF -->
+                            <div class="w-full bg-slate-900 rounded-3xl border border-slate-800 p-6 md:p-8 text-white shadow-2xl relative overflow-hidden">
+                                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl pointer-events-none"><i :class="topicsData[selectedTopic].icon"></i></div>
+                                <div class="relative z-10 space-y-5">
+                                    <div class="flex items-center space-x-3.5">
+                                        <div class="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-xl text-white shadow-lg shadow-indigo-500/50 flex-shrink-0">
+                                            <i :class="topicsData[selectedTopic].icon"></i>
+                                        </div>
+                                        <div>
+                                            <span class="text-[10px] uppercase font-bold text-indigo-400 tracking-wider">Laboratorium Visualisasi Hardware</span>
+                                            <h4 class="font-extrabold text-lg text-white" x-text="topicsData[selectedTopic].title"></h4>
+                                        </div>
+                                    </div>
+
+                                    <!-- Panel Spesifikasi Hardware Interaktif -->
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                        <div class="bg-slate-800/90 border border-slate-700 p-3.5 rounded-2xl text-center">
+                                            <span class="text-[10px] text-slate-400 uppercase font-bold">Kategori</span>
+                                            <div class="text-xs font-bold text-indigo-300 mt-1">Komponen Utama PC</div>
+                                        </div>
+                                        <div class="bg-slate-800/90 border border-slate-700 p-3.5 rounded-2xl text-center">
+                                            <span class="text-[10px] text-slate-400 uppercase font-bold">Standar Industri</span>
+                                            <div class="text-xs font-bold text-emerald-300 mt-1">ATX / SNI / ISO</div>
+                                        </div>
+                                        <div class="bg-slate-800/90 border border-slate-700 p-3.5 rounded-2xl text-center">
+                                            <span class="text-[10px] text-slate-400 uppercase font-bold">Fungsi Vital</span>
+                                            <div class="text-xs font-bold text-blue-300 mt-1">Processing &amp; I/O</div>
+                                        </div>
+                                        <div class="bg-slate-800/90 border border-slate-700 p-3.5 rounded-2xl text-center">
+                                            <span class="text-[10px] text-slate-400 uppercase font-bold">Kurikulum</span>
+                                            <div class="text-xs font-bold text-amber-300 mt-1">Fase E SMK/MAK</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Diagram Blok Hardware Detail -->
+                                    <div class="p-4 bg-slate-950/90 rounded-2xl border border-slate-800 text-xs text-slate-300 leading-relaxed font-mono space-y-2">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                                            <span class="text-indigo-400 font-bold">&gt; STATUS DIAGNOSTIK HARDWARE:</span> 
+                                            <span class="text-emerald-400">AKTIF &amp; NORMAL</span>
+                                        </div>
+                                        <p class="text-slate-300 font-sans text-xs pt-1" x-text="topicsData[selectedTopic].shortDesc"></p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="bg-indigo-50/60 p-5 rounded-2xl border border-indigo-100 text-indigo-950 font-medium text-sm leading-relaxed" x-text="topicsData[selectedTopic].shortDesc"></div>
@@ -479,7 +519,7 @@
                                     <div class="p-2 bg-indigo-100 text-indigo-600 rounded-xl"><i class="fa-solid fa-microchip"></i></div>
                                     <div>
                                         <h5 class="text-xs font-bold text-slate-800">Processor (CPU)</h5>
-                                        <p class="text-[10px] text-slate-500">Pasang pada Socket Motherboard (Perhatikan pin segitiga)</p>
+                                        <p class="text-[10px] text-slate-500">Pasang pada Socket Motherboard</p>
                                     </div>
                                 </div>
                                 <button @click="assemblySteps.cpu = true" :disabled="assemblySteps.cpu" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all"
@@ -494,7 +534,7 @@
                                     <div class="p-2 bg-blue-100 text-blue-600 rounded-xl"><i class="fa-solid fa-memory"></i></div>
                                     <div>
                                         <h5 class="text-xs font-bold text-slate-800">Memori RAM</h5>
-                                        <p class="text-[10px] text-slate-500">Tekan hingga klip pengunci slot DIMM berbunyi klik</p>
+                                        <p class="text-[10px] text-slate-500">Tekan hingga klip pengunci DIMM berbunyi</p>
                                     </div>
                                 </div>
                                 <button @click="assemblySteps.ram = true" :disabled="!assemblySteps.cpu || assemblySteps.ram" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all"
@@ -509,7 +549,7 @@
                                     <div class="p-2 bg-emerald-100 text-emerald-600 rounded-xl"><i class="fa-solid fa-hard-drive"></i></div>
                                     <div>
                                         <h5 class="text-xs font-bold text-slate-800">SSD M.2 NVMe</h5>
-                                        <p class="text-[10px] text-slate-500">Masukkan miring 30 derajat lalu kencangkan baut</p>
+                                        <p class="text-[10px] text-slate-500">Masukkan miring lalu kencangkan baut</p>
                                     </div>
                                 </div>
                                 <button @click="assemblySteps.storage = true" :disabled="assemblySteps.storage" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all"
@@ -524,7 +564,7 @@
                                     <div class="p-2 bg-amber-100 text-amber-600 rounded-xl"><i class="fa-solid fa-puzzle-piece"></i></div>
                                     <div>
                                         <h5 class="text-xs font-bold text-slate-800">Kartu Grafis (GPU)</h5>
-                                        <p class="text-[10px] text-slate-500">Masukkan ke slot PCIe x16 hingga terkunci</p>
+                                        <p class="text-[10px] text-slate-500">Masukkan ke slot PCIe x16</p>
                                     </div>
                                 </div>
                                 <button @click="assemblySteps.gpu = true" :disabled="assemblySteps.gpu" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all"
@@ -539,7 +579,7 @@
                                     <div class="p-2 bg-purple-100 text-purple-600 rounded-xl"><i class="fa-solid fa-bolt"></i></div>
                                     <div>
                                         <h5 class="text-xs font-bold text-slate-800">Power Supply (PSU)</h5>
-                                        <p class="text-[10px] text-slate-500">Hubungkan kabel 24-pin ATX & 8-pin CPU</p>
+                                        <p class="text-[10px] text-slate-500">Hubungkan kabel 24-pin ATX & 8-pin</p>
                                     </div>
                                 </div>
                                 <button @click="assemblySteps.psu = true" :disabled="assemblySteps.psu" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all"
@@ -554,7 +594,7 @@
                                     <div class="p-2 bg-rose-100 text-rose-600 rounded-xl"><i class="fa-solid fa-server"></i></div>
                                     <div>
                                         <h5 class="text-xs font-bold text-slate-800">CPU Cooler & Casing</h5>
-                                        <p class="text-[10px] text-slate-500">Oleskan pasta termal dan pasang pendingin</p>
+                                        <p class="text-[10px] text-slate-500">Oleskan pasta & pasang pendingin</p>
                                     </div>
                                 </div>
                                 <button @click="assemblySteps.casing = true" :disabled="!assemblySteps.cpu || assemblySteps.casing" class="px-3.5 py-2 rounded-xl text-xs font-bold transition-all"
@@ -609,7 +649,7 @@
                             </div>
                         </div>
                         <div class="mt-6 text-xs text-slate-400 text-center">
-                            Gunakan pemahaman Beep Code ini untuk menyelesaikan soal troubleshooting pada asesmen TKA Pusmendik.
+                            Gunakan pemahaman Beep Code ini untuk menyelesaikan soal troubleshooting pada asesmen mandiri.
                         </div>
                     </div>
                 </div>
@@ -673,7 +713,7 @@
                 </div>
             </div>
 
-            <!-- TAB: UJIAN (TKA) -->
+            <!-- TAB: UJIAN -->
             <div x-show="activeTab === 'ujian'" class="space-y-6 max-w-6xl mx-auto" x-cloak x-transition.opacity>
                 
                 <!-- State 1: Pilih Paket -->
@@ -682,8 +722,8 @@
                         <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto text-2xl shadow-inner mb-4">
                             <i class="fa-solid fa-file-contract"></i>
                         </div>
-                        <h3 class="text-2xl font-extrabold text-slate-800">Simulasi TKA Resmi Pusmendik (Hardware PC)</h3>
-                        <p class="text-sm text-slate-500 mt-2">Uji kompetensi Anda dengan 3 paket soal standar industri TKJ/TJKT (HOTS terintegrasi). 25 soal, 45 menit, 5 opsi pilihan.</p>
+                        <h3 class="text-2xl font-extrabold text-slate-800">Simulasi Ujian Resmi (Hardware PC)</h3>
+                        <p class="text-sm text-slate-500 mt-2">Uji kompetensi Anda dengan 3 paket soal standar industri TKJ (HOTS terintegrasi). 25 soal, 45 menit, 5 opsi pilihan.</p>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -790,7 +830,7 @@
                         <div class="w-24 h-24 rounded-full flex items-center justify-center mx-auto text-4xl shadow-xl mb-6 text-white" :class="tkaScore >= 70 ? 'bg-green-500 shadow-green-500/40' : 'bg-red-500 shadow-red-500/40'">
                             <i :class="tkaScore >= 70 ? 'fa-solid fa-check-double' : 'fa-solid fa-xmark'"></i>
                         </div>
-                        <h3 class="text-3xl font-extrabold text-slate-800">Simulasi TKA Selesai!</h3>
+                        <h3 class="text-3xl font-extrabold text-slate-800">Simulasi Ujian Selesai!</h3>
                         <p class="text-sm text-slate-500 mt-2 font-medium" x-text="`Paket yang dikerjakan: ${tkaPackages[tkaActivePkg]?.name}`"></p>
 
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
@@ -837,7 +877,7 @@
             <div x-show="activeTab === 'analisis'" class="space-y-6 max-w-5xl mx-auto" x-cloak x-transition.opacity>
                 <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
                     <h3 class="text-xl font-bold text-slate-800">Dasbor Analisis Performa</h3>
-                    <p class="text-xs text-slate-500 mt-1">Evaluasi hasil belajar Anda berdasarkan elemen materi perangkat keras komputer dan level kognitif taksonomi Bloom (Pusmendik).</p>
+                    <p class="text-xs text-slate-500 mt-1">Evaluasi hasil belajar Anda berdasarkan elemen materi perangkat keras komputer dan level kognitif taksonomi Bloom.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -887,7 +927,7 @@
                 practiceIdx: 0,
                 practiceSelected: null,
 
-                // TKA State
+                // Exam State
                 tkaState: 'select',
                 tkaActivePkg: 0,
                 tkaCurrIdx: 0,
@@ -899,10 +939,6 @@
                 tkaCorrect: 0,
                 showConfirmModal: false,
 
-                // ==========================================
-                // JSON DATA STRUCTURES (HARDWARE KOMPUTER)
-                // ==========================================
-                
                 topicsData: [
                     {
                         title: "Motherboard dan Chipset Komputer",
@@ -1037,36 +1073,31 @@
                     }
                 ],
 
-                // 3 TKA Packages (25 questions each, 5 options)
                 tkaPackages: [
                     {
                         name: "Paket A: Arsitektur Motherboard & Komponen Inti",
-                        desc: "Asesmen TKA standar menengah menguji pemahaman struktur motherboard, chipset, CPU, dan spesifikasi teknis memori RAM.",
+                        desc: "Asesmen standar menengah menguji pemahaman struktur motherboard, chipset, CPU, dan spesifikasi teknis memori RAM.",
                         questions: [
                             { top: "Motherboard", q: "Papan sirkuit utama tempat seluruh perangkat keras komputer dihubungkan agar dapat saling berkomunikasi melalui jalur bus data disebut...", opts: ["Hard Disk", "Power Supply", "Motherboard (Papan Induk)", "VGA Card", "Casing PC"], ans: 2, kognitif: "Knowing" },
                             { top: "Motherboard", q: "Arsitektur chip pengontrol pada motherboard tradisional membagi tugas menjadi dua bagian utama, di mana chip yang bertugas mengatur lalu lintas data berkecepatan tinggi antara CPU, RAM, dan slot PCIe disebut...", opts: ["Southbridge", "Northbridge", "Super I/O", "CMOS Battery", "BIOS ROM"], ans: 1, kognitif: "Knowing" },
                             { top: "Motherboard", q: "Standar ukuran fisik, tata letak lubang baut, dan penempatan port I/O belakang pada papan induk komputer dikenal dengan istilah...", opts: ["Form Factor (contoh: ATX, Micro-ATX)", "Chipset Architecture", "Bus Width Standard", "BIOS UEFI Specification", "DIMM Slot Type"], ans: 0, kognitif: "Knowing" },
                             { top: "Processor", q: "Bagian internal dari prosesor (CPU) yang bertanggung jawab penuh dalam menjalankan operasi perhitungan aritmatika seperti penjumlahan serta operasi logika adalah...", opts: ["Control Unit (CU)", "Arithmetic Logic Unit (ALU)", "Cache Memory L3", "Register AX", "Memory Controller"], ans: 1, kognitif: "Knowing" },
                             { top: "RAM", q: "Karakteristik utama dari memori utama RAM (Random Access Memory) dibandingkan media penyimpanan permanen adalah sifatnya yang...", opts: ["Non-volatile (data tidak hilang saat listrik padam)", "Volatile (seluruh data akan hilang saat komputer dimatikan)", "Read-Only (hanya bisa dibaca tanpa bisa diubah)", "Magnetic-based (menggunakan piringan berputar)", "Optical-based (menggunakan sinar laser inframerah)"], ans: 1, kognitif: "Knowing" },
-                            
                             { top: "Motherboard", q: "Slot ekspansi pada motherboard modern yang memiliki lebar jalur transfer data tercepat dan biasa digunakan untuk memasang Kartu Grafis (GPU Dedicated) adalah...", opts: ["PCIe x1", "PCIe x16", "PCI Slot 32-bit", "AGP 8x", "ISA Slot"], ans: 1, kognitif: "Applying" },
                             { top: "Processor", q: "Satuan ukur kecepatan clock internal prosesor komputer modern pada spesifikasi teknis umumnya dinyatakan dalam satuan...", opts: ["Megabyte (MB)", "Gigahertz (GHz)", "Revolution Per Minute (RPM)", "Volt (V)", "Ampere (A)"], ans: 1, kognitif: "Knowing" },
                             { top: "RAM", q: "Teknologi pada modul RAM yang memungkinkan pengaksesan data secara paralel melalui dua jalur saluran terpisah ke memori untuk melipatgandakan bandwidth disebut...", opts: ["Single Channel", "Dual Channel", "Parity Check", "ECC Buffering", "XMP Overclocking"], ans: 1, kognitif: "Applying" },
                             { top: "Storage", q: "Media penyimpanan sekunder non-volatile yang menggunakan piringan magnetik berputar dengan kepala baca mekanis dinamakan...", opts: ["SSD SATA", "NVMe M.2", "Hard Disk Drive (HDD)", "Flashdisk USB", "ROM BIOS"], ans: 2, kognitif: "Knowing" },
-                            { top: "PSU", q: "Fungsi utama dari Power Supply Unit (PSU) di dalam sistem komputer adalah...", opts: ["Meningkatkan kecepatan clock CPU secara otomatis", "Mengubah arus AC dari jala-jala PLN menjadi arus DC stabil (+12V, +5V, +3.3V)", "Menyimpan data permanen sistem operasi", "Mendinginkan suhu di dalam casing komputer", "Menampilkan gambar ke monitor"], ans: 1, kognitif: "Knowing" },
-                            
+                            { top: "PSU", q: "Fungsi utama dari Power Supply Unit (PSU) di dalam sistem komputer adalah...", opts: ["Meningkatkan kecepatan clock CPU secara otomatis", "Mengubah arus AC dari jala-jala listrik PLN menjadi arus DC stabil (+12V, +5V, +3.3V)", "Menyimpan data permanen sistem operasi", "Mendinginkan suhu di dalam casing komputer", "Menampilkan gambar ke monitor"], ans: 1, kognitif: "Knowing" },
                             { top: "PSU", q: "Sertifikasi efisiensi daya pada Power Supply Unit (PSU) yang menjamin konversi energi listrik dengan standar internasional (seperti Bronze, Silver, Gold, Platinum) dikenal dengan nama...", opts: ["80 Plus Certificate", "ATX Power Standard", "CE Safety Mark", "RoHS Compliance", "SNI Electrical Standard"], ans: 0, kognitif: "Knowing" },
                             { top: "Periferal", q: "Program diagnostik awal yang dijalankan oleh chip BIOS pada ROM motherboard sesaat tombol power komputer ditekan untuk memeriksa kesiapan RAM, Keyboard, dan VGA disebut...", opts: ["POST (Power-On Self-Test)", "OS Bootloader", "Driver Installation", "Disk Defragmenter", "CMOS Reset"], ans: 0, kognitif: "Knowing" },
                             { top: "Periferal", q: "Jika saat komputer dinyalakan terdengar bunyi sandi alarm (Beep Code) berupa 1 kali beep panjang dan 2 kali beep pendek, masalah hardware yang terjadi biasanya bersumber pada...", opts: ["Modul RAM belum terpasang", "Kartu Grafis (VGA / GPU) tidak terdeteksi atau bermasalah", "Kipas CPU overheat", "Kabel power supply korslet", "Baterai CMOS habis"], ans: 1, kognitif: "Applying" },
                             { top: "Storage", q: "Keunggulan utama SSD (Solid State Drive) berbasis NAND Flash dibandingkan HDD mekanis konvensional adalah...", opts: ["Harga per Gigabyte jauh lebih murah", "Tahan terhadap guncangan fisik, tidak berisik, dan kecepatan baca/tulis jauh lebih tinggi", "Kapasitas penyimpanan mencapai ratusan Terabyte per unit", "Menggunakan piringan magnetik berkecepatan 15000 RPM", "Membutuhkan daya listrik lebih besar"], ans: 1, kognitif: "Reasoning" },
-                            { top: "Motherboard", q: "Konektor daya utama berukuran besar 24-pin yang terhubung dari PSU ke motherboard berfungsi terutama untuk menyuplai tegangan kerja ke...", opts: ["Sirkuit logika utama motherboard dan slot ekspansi", "Motor spindle hard disk", "Lampu LED hiasan casing", "Kabel jaringan LAN", "Port USB mouse dan keyboard"], ans: 0, kognitif: "Applying" },
-
+                            { top: "Motherboard", q: "Konektor daya utama berukuran besar 24-pin yang terhubung dari PSU ke motherboard terutama untuk menyuplai tegangan kerja ke...", opts: ["Sirkuit logika utama motherboard dan slot ekspansi", "Motor spindle hard disk", "Lampu LED hiasan casing", "Kabel jaringan LAN", "Port USB mouse dan keyboard"], ans: 0, kognitif: "Applying" },
                             { top: "Processor", q: "Memori internal berukuran sangat kecil berkecepatan tinggi yang terletak langsung di dalam chip prosesor untuk menampung data yang sering diakses disebut...", opts: ["Virtual Memory", "Cache Memory (L1/L2/L3)", "Hard Disk Buffer", "ROM BIOS", "Flash Memory"], ans: 1, kognitif: "Knowing" },
                             { top: "Storage", q: "Protokol dan antarmuka penyimpanan SSD tercepat saat ini yang terhubung langsung melalui jalur bus PCIe pada motherboard dinamakan...", opts: ["IDE / PATA", "SATA III", "NVMe (Non-Volatile Memory Express)", "SCSI Parallel", "USB 2.0"], ans: 2, kognitif: "Knowing" },
                             { top: "Periferal", q: "Pasta termal (Thermal Paste) yang dioleskan di antara permukaan prosesor dan heatsink pendingin berfungsi untuk...", opts: ["Merekatkan prosesor agar tidak lepas dari soket", "Mengisi celah mikroskopis udara agar perpindahan panas dari CPU ke heatsink berjalan optimal", "Mencegah korsleting arus listrik statis", "Menambah kecepatan putaran kipas pendingin", "Menjaga kelembapan udara di dalam casing"], ans: 1, kognitif: "Reasoning" },
                             { top: "Motherboard", q: "Baterai kecil berbentuk koin (CR2032) yang terpasang pada motherboard berfungsi untuk...", opts: ["Menyuplai daya cadangan saat komputer mati agar pengaturan BIOS/CMOS dan jam sistem tidak reset", "Menghidupkan kipas casing", "Menambah kapasitas RAM secara virtual", "Mengisi ulang daya baterai laptop", "Menjadi sumber utama daya prosesor"], ans: 0, kognitif: "Knowing" },
                             { top: "PSU", q: "Jalur rel tegangan DC pada Power Supply yang paling banyak menyedot arus besar untuk kebutuhan daya Processor dan Kartu Grafis (GPU) adalah jalur...", opts: ["+3.3 Volt", "+5 Volt", "+12 Volt", "-12 Volt", "+5V Standby"], ans: 2, kognitif: "Applying" },
-
                             { top: "Periferal", q: "Tindakan pencegahan paling penting yang wajib dilakukan seorang teknisi sebelum memegang komponen elektronik sensitif (seperti RAM atau Motherboard) di dalam rak rakitan adalah...", opts: ["Mematikan lampu ruangan", "Menggunakan gelang antistatis (ESD wrist strap) atau menyentuh logam grounded", "Membersihkan komponen dengan air sabun", "Menjemur komponen di bawah terik matahari", "Melepas semua kipas pendingin"], ans: 1, kognitif: "Reasoning" },
                             { top: "Storage", q: "Berapa batas kecepatan transfer teoritis maksimal dari antarmuka SATA III (SATA 6Gb/s) pada SSD konvensional?", opts: ["Sekitar 550 - 600 MB/s", "Sekitar 3500 MB/s", "Sekitar 7000 MB/s", "Sekitar 100 MB/s", "Sekitar 10 GB/s"], ans: 0, kognitif: "Knowing" },
                             { top: "Motherboard", q: "Pin konektor pada panel depan motherboard yang bertugas menerima sinyal sesaat saat tombol fisik casing ditekan untuk menyalakan komputer dinamakan...", opts: ["RESET SW", "POWER SW", "HDD LED", "SPEAKER PIN", "USB Header"], ans: 1, kognitif: "Knowing" },
@@ -1083,25 +1114,21 @@
                             { top: "Periferal", q: "Gejala komputer saat tombol power ditekan adalah kipas berputar sepersekian detik lalu mati kembali berulang-ulang (boot loop). Penyebab paling umum dari masalah ini adalah...", opts: ["Kabel monitor kurang kencang", "Pemasangan CPU cooler kurang rapat atau pasta termal kering sehingga terjadi pengamanan thermal shutdown", "Kapasitas SSD terlalu penuh", "Resolusi layar terlalu tinggi", "Driver sound card belum diinstal"], ans: 1, kognitif: "Reasoning" },
                             { top: "Motherboard", q: "Apa fungsi dari fitur BIOS UEFI dibandingkan BIOS Legacy tradisional generasi lama?", opts: ["Mendukung kapasitas hard disk di atas 2TB (GPT partition), proses booting lebih cepat, dan antarmuka berbasis grafis mouse", "Membuat komputer bisa berjalan tanpa prosesor", "Menghapus kebutuhan akan memori RAM", "Menurunkan suhu prosesor secara drastis", "Mengubah motherboard biasa menjadi server internet"], ans: 0, kognitif: "Knowing" },
                             { top: "RAM", q: "Jika pada spesifikasi modul RAM tertulis DDR5-5600 CL46, angka '5600' merepresentasikan...", opts: ["Kapasitas penyimpanan 5600 Megabyte", "Frekuensi transfer data efektif dalam satuan MT/s (MegaTransfers per second)", "Tegangan kerja RAM 5.6 Volt", "Waktu latensi tCL sebesar 56 nanodetik", "Jumlah pin konektor modul RAM"], ans: 1, kognitif: "Knowing" },
-
                             { top: "Storage", q: "Perbedaan mendasar antara SSD SATA berbasis protokol AHCI dengan SSD M.2 berbasis NVMe terletak pada...", opts: ["NVMe menggunakan jalur PCIe berkecepatan tinggi langsung ke CPU, sedangkan SATA dibatasi kontroler AHCI berkecepatan lebih rendah", "SATA menggunakan piringan magnetik, NVMe menggunakan pita kaset", "NVMe hanya bisa dipasang di laptop merk tertentu", "SATA memiliki kecepatan 10 kali lipat lebih cepat dari NVMe", "Keduanya memiliki spesifikasi jalur data yang persis sama"], ans: 0, kognitif: "Reasoning" },
                             { top: "Processor", q: "Fenomena di mana prosesor menurunkan kecepatan clock (throttling) secara otomatis saat sedang bekerja keras adalah akibat dari...", opts: ["Suhu di dalam core prosesor melebihi batas aman thermal limit", "Kapasitas RAM terlalu longgar", "Baterai CMOS sudah lemah", "Kabel power supply terlalu panjang", "Koneksi internet terputus"], ans: 0, kognitif: "Reasoning" },
                             { top: "Periferal", q: "Alat ukur elektronika dasar yang wajib dimiliki seorang teknisi hardware komputer untuk menguji kestabilan tegangan jalur DC pada kabel Power Supply (misal memastikan jalur +12V tidak drop) adalah...", opts: ["Oscilloscope digital", "Multimeter (Avometer) Digital", "LAN Tester", "Signal Generator", "Thermistor gun"], ans: 1, kognitif: "Applying" },
                             { top: "Motherboard", q: "Jika pin CMOS pada motherboard di-short (direset menggunakan jumper atau melepas baterai koin selama beberapa menit), efek yang terjadi pada sistem adalah...", opts: ["Seluruh data di SSD terhapus permanen", "Pengaturan BIOS kembali ke setelan default pabrik (Factory Reset)", "Prosesor mengalami overclock otomatis", "Versi BIOS ter-update ke versi terbaru", "Kapasitas RAM bertambah"], ans: 1, kognitif: "Applying" },
-                            { top: "PSU", q: "Apa arti dari fitur 'Modular' pada kabel Power Supply Unit (PSU)?", opts: ["Semua kabel terspatri permanen di dalam bodi PSU", "Kabel daya dapat dilepas-pasang sesuai kebutuhan, sehingga bagian dalam casing lebih rapi", "PSU dapat diubah menjadi inverter tenaga surya", "PSU memiliki kipas pendingin yang bisa dilepas", "PSU tidak membutuhkan aliran listrik PLN"], ans: 1, kognitif: "Knowing" },
-
+                            { top: "PSU", q: "Apa arti dari fitur 'Modular' pada kabel Power Supply Unit (PSU)?", opts: ["Semua kabel terspatri permanen di bodi PSU", "Kabel daya dapat dilepas-pasang sesuai kebutuhan, sehingga bagian dalam casing lebih rapi", "PSU dapat diubah menjadi inverter tenaga surya", "PSU memiliki kipas pendingin yang bisa dilepas", "PSU tidak membutuhkan aliran listrik PLN"], ans: 1, kognitif: "Knowing" },
                             { top: "Storage", q: "Sistem partisi hard disk modern yang direkomendasikan untuk kapasitas penyimpanan di atas 2 Terabyte serta kompatibel dengan sistem UEFI adalah...", opts: ["MBR (Master Boot Record)", "GPT (GUID Partition Table)", "FAT16", "FAT32", "CDFS"], ans: 1, kognitif: "Knowing" },
                             { top: "Periferal", q: "Saat merakit PC, seorang teknisi mendapati komputer menyala, kipas berputar, namun tidak ada tampilan sama sekali ke monitor dan tidak ada bunyi beep POST. Langkah awal troubleshooting yang paling logis adalah...", opts: ["Mengganti motherboard baru", "Mencabut dan membersihkan pin kuningan modul RAM serta memastikan terpasang sempurna pada slot", "Membeli prosesor baru", "Mengganti jenis casing PC", "Memformat ulang SSD"], ans: 1, kognitif: "Reasoning" },
                             { top: "RAM", q: "Manakah konfigurasi pemasangan RAM 2 keping pada 4 slot motherboard yang benar untuk mengaktifkan mode Dual Channel?", opts: ["Dipasang berdekatan pada slot 1 dan 2", "Dipasang berselang-seling pada slot 1 dan 3 (atau slot 2 dan 4)", "Hanya dipasang pada slot 4 saja", "Dipasang secara acak di slot mana pun", "Dipasang pada slot paling pinggir kiri"], ans: 1, kognitif: "Applying" },
                             { top: "Processor", q: "Komponen pendingin prosesor jenis AIO (All-In-One) Liquid Cooler memanfaatkan media apa untuk membuang panas dari CPU ke radiator?", opts: ["Siraman udara langsung dari kipas luar", "Cairan pendingin (coolant) yang bersirkulasi melalui pompa tertutup", "Pipa tembaga hampa udara berisi es kering", "Gel silika penyerap panas", "Medan magnet induksi"], ans: 1, kognitif: "Knowing" },
                             { top: "Motherboard", q: "Port konektor I/O belakang pada motherboard modern yang dirancang khusus untuk mentransfer data berkecepatan tinggi, video display, sekaligus pengisian daya perangkat eksternal dalam satu port berbentuk oval kecil adalah...", opts: ["Port Serial RS-232", "Port LPT Printer", "Port USB Type-C / Thunderbolt", "Port PS/2 Keyboard", "Port VGA D-Sub"], ans: 2, kognitif: "Applying" },
-
                             { top: "Periferal", q: "Apa fungsi dari program utilitas 'MemTest86' yang sering digunakan oleh teknisi komputer profesional?", opts: ["Menguji kecepatan baca SSD NVMe", "Melakukan pengujian menyeluruh (stress test & error checking) pada modul memori RAM", "Mengukur tegangan riak power supply", "Memeriksa suhu core prosesor saat gaming", "Membersihkan file sampah sistem operasi"], ans: 1, kognitif: "Applying" },
                             { top: "Storage", q: "Jika sebuah Hard Disk mekanis (HDD) mengeluarkan bunyi klik berderit secara berulang (clicking sound) dan komputer gagal mendeteksi partisi, indikasi kerusakan hardware tersebut adalah...", opts: ["Kabel SATA kurang kencang", "Kerusakan mekanis pada bagian head pembaca piringan (Head Crash)", "Kapasitas RAM kurang", "Driver chipset belum terinstal", "Suhu CPU terlalu panas"], ans: 1, kognitif: "Reasoning" },
                             { top: "PSU", q: "Kabel konektor tambahan berformat 8-pin (atau 4+4 pin) yang keluar dari PSU wajib dihubungkan ke motherboard pada area dekat socket CPU untuk menyuplai daya khusus ke...", opts: ["Slot PCIe kartu grafis", "Chipset Northbridge", "Prosesor (CPU)", "Modul RAM", "Port USB belakang"], ans: 2, kognitif: "Knowing" },
                             { top: "Motherboard", q: "Teknologi bus ekspansi PCIe 4.0 memiliki karakteristik kecepatan transfer data per-lane dibandingkan generasi sebelumnya PCIe 3.0 yaitu...", opts: ["Dua kali lipat lebih cepat", "Setengah lebih lambat", "Sama persis tanpa peningkatan", "Sepuluh kali lipat lebih lambat", "Menggunakan protokol nirkabel"], ans: 0, kognitif: "Knowing" },
                             { top: "Periferal", q: "Dalam prosedur pembersihan berkala (maintenance) perangkat keras komputer, bahan cairan apakah yang paling aman digunakan untuk membersihkan sisa pasta termal lama pada prosesor?", opts: ["Air mineral biasa", "Alkohol isopropil (IPA) kadar tinggi (>90%)", "Minyak goreng kelapa", "Bensin premium", "Deterjen pencuci piring"], ans: 1, kognitif: "Applying" },
-
                             { top: "RAM", q: "Apa kepanjangan dari istilah 'XMP' (Intel Extreme Memory Profile) atau 'EXPO' (AMD) pada spesifikasi modul RAM?", opts: ["Fitur profil pengaturan otomatis kecepatan dan timing RAM agar berjalan sesuai spesifikasi tertinggi pabrik", "Sistem pengaman anti-virus pada modul memori", "Teknologi pendingin cairan RAM", "Kapasitas cadangan memori virtual", "Sistem lampu RGB sinkronisasi"], ans: 0, kognitif: "Knowing" },
                             { top: "Processor", q: "Komponen semikonduktor silikon utama yang membentuk jutaan hingga miliaran saklar mikroskopis di dalam sebuah prosesor dinamakan...", opts: ["Transistor", "Dioda Zener", "Kondensator elektrolit", "Resistor karbon", "Induktor ferit"], ans: 0, kognitif: "Knowing" },
                             { top: "Storage", q: "Bila sebuah SSD NVMe M.2 baru dipasang pada motherboard namun tidak terdeteksi di BIOS, langkah pengecekan awal yang paling tepat adalah...", opts: ["Mengganti prosesor", "Memastikan slot M.2 tersebut aktif dan mendukung jalur PCIe (bukan slot SATA M.2) serta terpasang dengan sudut 30 derajat lalu dikencangkan", "Menambah kapasitas RAM", "Membalik posisi pemasangan secara terbalik", "Mengganti kabel power supply"], ans: 1, kognitif: "Reasoning" },
@@ -1118,25 +1145,21 @@
                             { top: "Storage", q: "Performa read/write SSD NVMe M.2 tiba-tiba merosot drastis (thermal throttling) setelah beberapa menit melakukan transfer file ukuran raksasa. Penyebab utama fenomena ini adalah...", opts: ["Kabel SATA mengalami korsleting", "Suhu chip NAND flash dan controller SSD terlalu panas melebihi batas operasional (>70°C) tanpa adanya heatsink M.2 yang memadai", "Kapasitas RAM penuh", "Versi Windows sudah kedaluwarsa", "Driver VGA belum diperbarui"], ans: 1, kognitif: "Reasoning" },
                             { top: "Periferal", q: "Seorang teknisi menguji motherboard menggunakan POST Card dan indikator menampilkan kode '00' atau 'FF' secara konstan tanpa ada perubahan serta CPU fan tidak berputar. Diagnosis kerusakan yang paling tepat adalah...", opts: ["Sistem normal siap booting", "Kerusakan fatal pada CPU, jalur soket LGA, atau kegagalan suplai tegangan VCore dari VRM motherboard ke prosesor", "Kapasitas hard disk penuh", "Pengaturan jam BIOS salah", "Kabel keyboard terbalik"], ans: 1, kognitif: "Reasoning" },
                             { top: "Processor", q: "Apa perbedaan arsitektur mendesak antara prosesor dengan desain arsitektur x86-64 (Intel/AMD) dan arsitektur ARM (Apple Silicon / Snapdragon) pada komputer modern?", opts: ["x86 menggunakan set instruksi kompleks CISC berdaya lebih tinggi, sedangkan ARM menggunakan set instruksi RISC yang sangat hemat energi", "ARM hanya bisa dipakai untuk kalkulator", "x86 tidak mendukung sistem operasi bergenre grafis", "Keduanya memiliki struktur transistor yang persis sama", "ARM membutuhkan kipas pendingin raksasa"], ans: 0, kognitif: "Knowing" },
-
                             { top: "Motherboard", q: "Bagian dari sirkuit daya motherboard yang mengelilingi socket CPU dan bertugas menurunkan tegangan 12V dari PSU menjadi tegangan kerja prosesor (VCore) yang sangat stabil (misal 1.1V) dinamakan...", opts: ["VRM (Voltage Regulator Module)", "Northbridge Controller", "Super I/O Chip", "CMOS RAM", "Clock Generator"], ans: 0, kognitif: "Knowing" },
                             { top: "RAM", q: "Ketika melakukan overclocking kecepatan RAM melalui profil XMP, sistem tiba-tiba gagal booting dan kembali ke pengaturan default. Langkah teknis penyesuaian yang paling logis adalah...", opts: ["Menambah tegangan kerja RAM (VDD/VDDQ) sedikit demi sedikit atau melonggarkan timing latensi", "Menurunkan kapasitas SSD", "Mengganti casing komputer", "Mencabut kartu grafis", "Memotong jalur pin RAM"], ans: 0, kognitif: "Reasoning" },
                             { top: "Storage", q: "Dalam konfigurasi RAID 5 yang menggunakan 4 buah hard disk, jika satu buah hard disk mengalami kerusakan total (failure), apa yang terjadi pada sistem dan data pengguna?", opts: ["Semua data musnah permanen dan sistem crash total", "Sistem tetap berjalan normal (degraded mode) tanpa kehilangan data karena paritas terdistribusi, dan hard disk yang rusak dapat direar-build setelah diganti", "Kapasitas total penyimpanan langsung berlipat ganda", "Komputer otomatis terkunci permanen oleh pabrik", "Kecepatan transfer data meningkat 2 kali lipat"], ans: 1, kognitif: "Reasoning" },
                             { top: "PSU", q: "Mengapa PSU murah berkualitas rendah (tanpa sertifikasi 80+) sangat berbahaya bagi komponen hardware mahal seperti GPU high-end?", opts: ["Karena menghasilkan riak tegangan (ripple noise) tinggi dan tidak memiliki proteksi saat terjadi lonjakan tegangan PLN, berisiko merusak komponen", "Karena warnanya tidak menarik", "Karena menghasilkan suara bising saat kipas berputar", "Karena ukurannya terlalu besar untuk casing", "Karena kabelnya berwarna-warni"], ans: 0, kognitif: "Reasoning" },
                             { top: "Periferal", q: "Dalam merakit PC dengan pendingin air kustom (Custom Water Cooling), mengapa cairan yang digunakan wajib berjenis cairan non-konduktif khusus (coolant khusus) dan bukan air mineral biasa?", opts: ["Agar air berbau wangi", "Untuk mencegah terjadinya korsleting fatal (short circuit) apabila terjadi kebocoran kecil pada sambungan fitting pipa ke komponen elektronik", "Agar warna air tampak indah menyala", "Karena air biasa mudah membeku", "Agar pompa air tidak berisik"], ans: 1, kognitif: "Reasoning" },
-
                             { top: "Processor", q: "Apa fungsi dari fitur 'Resizable BAR' (Base Address Register) pada BIOS motherboard modern yang dipadukan dengan kartu grafis kompatibel?", opts: ["Mempercepat koneksi internet WiFi", "Memungkinkan CPU mengakses seluruh memori VRAM kartu grafis secara sekaligus (tidak terpotong blok 256MB), mendongkrak performa game", "Menambah kapasitas RAM fisik", "Meningkatkan resolusi kamera webcam", "Menghemat daya listrik saat komputer idle"], ans: 1, kognitif: "Knowing" },
                             { top: "Motherboard", q: "Port Header 'ARGB 5V 3-pin' pada motherboard modern digunakan untuk menghubungkan perangkat apa?", opts: ["Kabel power supply utama", "Kabel sinkronisasi pencahayaan lampu LED RGB yang dapat dikontrol warnanya per-LED secara digital", "Kabel tombol reset casing", "Kabel sensor suhu prosesor", "Kabel data hard disk lama"], ans: 0, kognitif: "Knowing" },
                             { top: "Storage", q: "Jika sebuah SSD SATA mengalami korupsi firmware controller sehingga terbaca berkapasitas '0 GB' di BIOS (sering disebut SandForce bug), tindakan teknis perbaikan tingkat lanjut yang umumnya dilakukan adalah...", opts: ["Membakar chip memori flash", "Melakukan flashing ulang firmware controller menggunakan alat khusus (PC-3000 atau software factory mode)", "Mencuci papan SSD dengan air sabun", "Menjemur SSD di bawah matahari", "Membalik posisi pin SATA"], ans: 1, kognitif: "Reasoning" },
                             { top: "Periferal", q: "Komputer menyala normal, namun port USB bagian belakang tidak berfungsi sama sekali untuk mendeteksi flashdisk atau mouse, meskipun port USB depan berfungsi. Komponen di motherboard manakah yang paling dicurigai mengalami kerusakan?", opts: ["Chipset utama atau chip pengontrol I/O (Super I/O) yang mengatur jalur jalur jalur port USB belakang", "Prosesor utama", "Modul RAM", "Kabel power supply", "Baterai CMOS"], ans: 0, kognitif: "Reasoning" },
                             { top: "RAM", q: "Apa keuntungan dari arsitektur modul RAM DDR5 dibandingkan DDR4 pada tegangan kerjanya?", opts: ["DDR5 bekerja pada tegangan lebih rendah (1.1V) serta memindahkan sirkuit pengatur daya (PMIC) langsung ke modul RAM itu sendiri untuk efisiensi", "DDR5 membutuhkan tegangan 5 Volt yang sangat besar", "DDR5 tidak memerlukan pendingin sama sekali", "DDR5 memiliki bentuk fisik yang bisa ditukar silang ke slot DDR4", "DDR5 menggunakan piringan magnetik"], ans: 0, kognitif: "Knowing" },
-
                             { top: "PSU", q: "Dalam spesifikasi teknis PSU, terdapat jalur rel +5V Standby (+5VSB). Apa tugas utama dari jalur tegangan siaga ini?", opts: ["Menyuplai daya ke sirkuit motherboard agar fungsi Wake-on-LAN, tombol power front panel, dan port USB tetap aktif meskipun komputer dalam keadaan soft-off (Shutdown)", "Menyalakan lampu sorot dalam casing", "Menjalankan proses rendering video saat komputer tidur", "Mendinginkan prosesor saat idle", "Mempercepat waktu booting SSD"], ans: 0, kognitif: "Applying" },
                             { top: "Motherboard", q: "Apa fungsi dari tombol 'BIOS FlashBack' atau 'Q-Flash Plus' yang sering tersedia di panel belakang motherboard kelas menengah-atas?", opts: ["Membersihkan debu di dalam motherboard", "Memungkinkan pengguna memperbarui (update) versi BIOS menggunakan flashdisk meskipun CPU, RAM, atau GPU belum terpasang di motherboard", "Mengembalikan pengaturan pabrik jam komputer", "Mengukur suhu prosesor", "Mempercepat koneksi internet"], ans: 1, kognitif: "Knowing" },
                             { top: "Periferal", q: "Ketika melakukan pemasangan heatsink menara udara (Air Cooler) berukuran besar pada CPU, kesalahan pemasangan manakah yang paling sering menyebabkan suhu prosesor melonjak drastis hingga 100°C saat idle?", opts: ["Lupa melepas stiker plastik pelindung transparan pada bagian bawah plat tembaga dasar heatsink", "Kurang kencang mengencangkan baut casing", "Menggunakan kabel warna hitam", "Memasang kipas menghadap ke arah memori RAM", "Tidak memasang tutup samping casing"], ans: 0, kognitif: "Reasoning" },
                             { top: "Storage", q: "Teknologi TRIM pada sistem operasi modern yang dikirimkan ke SSD sangat penting karena...", opts: ["Mencegah hard disk berputar terlalu cepat", "Memberitahu controller SSD blok data mana yang sudah tidak dipakai (dihapus pengguna) agar dapat dibersihkan terlebih dahulu sebelum proses penulisan data baru berikutnya, menjaga performa tetap optimal", "Memperbesar kapasitas penyimpanan fisik", "Menghemat daya listrik baterai laptop", "Menghapus virus secara otomatis"], ans: 1, kognitif: "Reasoning" },
                             { top: "Processor", q: "Berapa lebar jalur antarmuka bus PCIe 4.0 x16 yang menghubungkan kartu grafis ke prosesor pada motherboard modern?", opts: ["16 jalur jalur paralel independen berkecepatan tinggi", "1 jalur tunggal", "4 jalur serial", "32 jalur ganda", "64 jalur optik"], ans: 0, kognitif: "Knowing" },
-
                             { top: "Motherboard", q: "Jika sebuah jalur kapasitor SMD di dekat soket CPU motherboard tergores obeng saat perakitan hingga terlepas salah satu sisinya, namun komputer masih bisa menyala kadang-kadang lalu sering crash, analisis perbaikan di laboratorium elektronika adalah...", opts: ["Dibiarkan saja karena tidak berpengaruh", "Melakukan re-soldering (penyolderan ulang) komponen kapasitor pengganti dengan spesifikasi nilai kapasitansi yang sama", "Membuang motherboard ke tempat sampah", "Membungkus motherboard dengan plastik", "Mengganti prosesor dengan tipe lain"], ans: 1, kognitif: "Reasoning" },
                             { top: "RAM", q: "Manakah dari konfigurasi kapasitas berikut yang TIDAK direkomendasikan karena akan merusak mode operasi kanal memori (Memory Channel) optimal pada motherboard modern?", opts: ["Memasang 2 keping RAM identik 16GB (Total 32GB)", "Memasang 4 keping RAM identik 8GB (Total 32GB)", "Memasang 1 keping RAM 8GB dicampur dengan 1 keping RAM 16GB merek dan kecepatan berbeda secara sembarangan", "Memasang 2 keping RAM 8GB di slot dual channel", "Memasang modul RAM sesuai buku manual motherboard"], ans: 2, kognitif: "Reasoning" },
                             { top: "Periferal", q: "Apa fungsi dari pin header 'CLR_CMOS' pada motherboard jika terjadi kesalahan pengaturan BIOS (misal gagal overclocking yang menyebabkan layar blank hitam)?", opts: ["Menghapus seluruh sistem operasi Windows di SSD", "Menghubungkan pin tersebut sesaat untuk mengosongkan daya memori CMOS dan mengembalikan BIOS ke default", "Menambah kecepatan kipas pendingin", "Mematikan lampu RGB", "Mengunci BIOS dengan password sandi"], ans: 1, kognitif: "Applying" },
@@ -1146,7 +1169,6 @@
                     }
                 ],
 
-                // Bank Soal Latihan Mandiri Per Topik (5 Elemen Fase E)
                 practiceQuestions: [
                     // Elemen 1: Motherboard & Chipset
                     [
@@ -1255,7 +1277,7 @@
                             explanation: "Standar SATA III dibatasi oleh arsitektur antarmuka pada kecepatan riil sekitar 550 MB/s."
                         },
                         {
-                            q: "Sistem partisi hard disk modern yang mendukung kapasitas diabove 2TB serta kompatibel dengan sistem booting UEFI adalah...",
+                            q: "Sistem partisi hard disk modern yang mendukung kapasitas di atas 2TB serta kompatibel dengan sistem booting UEFI adalah...",
                             options: ["MBR (Master Boot Record)", "GPT (GUID Partition Table)", "FAT32", "CDFS", "Ext2"],
                             ans: 1,
                             cognitive: "Applying",
@@ -1318,7 +1340,7 @@
                         },
                         {
                             q: "Tindakan pencegahan ESD (Electrostatic Discharge) yang wajib dilakukan teknisi saat memegang komponen motherboard adalah...",
-                            options: ["Mematikan lampu ruangan", "Menggunakan gelang antistatis (ESD wrist strap) atau menyentuh bodi logam grounded", "Mencuci tangan dengan air sabun", "Menjemur komponen di bawah matahari", "Memakai sarung tangan karet tebal dapur"],
+                            options: ["Mematikan lampu ruangan", "Menggunakan gelang antistatis (ESD wrist strap) atau menyentuh bodi logam grounded", "Mencuci tangan dengan air sabun", "Menjemur komponen di bawah terik matahari", "Memakai sarung tangan karet tebal dapur"],
                             ans: 1,
                             cognitive: "Reasoning",
                             explanation: "Listrik statis tubuh manusia dapat merusak chip semikonduktor sensitif di motherboard tanpa disadari."
@@ -1339,10 +1361,6 @@
                         }
                     ]
                 ],
-
-                // ==========================================
-                // APPLICATION METHODS
-                // ==========================================
 
                 initApp() {
                     // Initialization hook
@@ -1440,16 +1458,15 @@
                 getTabTitle() {
                     const titles = {
                         dashboard: 'Beranda & Matriks Kisi-Kisi Hardware',
-                        materi: 'Materi Pembelajaran & Audio (Fase E)',
+                        materi: 'Materi Pembelajaran & Audio Narasi (Fase E)',
                         simulator: 'Simulator Rakit PC & Troubleshooting POST',
                         latihan: 'Latihan Mandiri Per Elemen Materi',
-                        ujian: 'Simulasi Ujian TKA Pusmendik (3 Paket)',
+                        ujian: 'Simulasi Ujian (3 Paket)',
                         analisis: 'Dasbor Analisis Performa & Kognitif'
                     };
                     return titles[this.activeTab] || 'Platform Belajar Hardware';
                 },
 
-                // Audio TTS Methods
                 toggleAudio(text) {
                     if (!('speechSynthesis' in window)) return;
                     if (this.isSpeaking) {
@@ -1487,7 +1504,6 @@
                     URL.revokeObjectURL(url);
                 },
 
-                // Simulator Methods
                 resetAssembly() {
                     this.assemblySteps = { cpu: false, ram: false, storage: false, gpu: false, psu: false, casing: false };
                 },
@@ -1524,7 +1540,6 @@
                     return map[this.troubleCode] || map['1_short'];
                 },
 
-                // Practice Mode Methods
                 getPracticeQ() {
                     return this.practiceQuestions[this.practiceTopicIdx] || [];
                 },
@@ -1579,7 +1594,6 @@
                     return 'border-slate-300 text-transparent';
                 },
 
-                // Exam (TKA) Mode Methods
                 startExam(pIdx) {
                     this.tkaActivePkg = pIdx;
                     this.tkaCurrIdx = 0;
@@ -1653,7 +1667,6 @@
                     this.tkaState = 'result';
                 },
 
-                // Performance Analytics Charts
                 drawAnalysisCharts() {
                     const topEl = document.getElementById('topicChart');
                     const cogEl = document.getElementById('cogChart');
@@ -1714,9 +1727,12 @@
                     window.hardwareCogChart = new Chart(cogEl, {
                         type: 'doughnut',
                         data: {
-                            labels: cogScores,
-                            backgroundColor: ['#6366f1', '#10b981', '#f59e0b'],
-                            borderWidth: 2
+                            labels: cogLabels,
+                            datasets: [{
+                                data: cogScores,
+                                backgroundColor: ['#6366f1', '#10b981', '#f59e0b'],
+                                borderWidth: 2
+                            }]
                         },
                         options: {
                             responsive: true,
